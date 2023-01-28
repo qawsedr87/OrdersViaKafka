@@ -9,8 +9,8 @@ import com.example.ordersviakafka.kafka.entity.ProductMessage;
 @Slf4j
 @Service
 public class ProductListener {
-    @KafkaListener(topics = "product", containerFactory = "kafkaListenerContainerFactory")
-    public void newProductListener(ProductMessage product) {
-        log.info("Get request from Front 'save product'" + product.toString());
-    }
+//    @KafkaListener(topics = "product", containerFactory = "kafkaListenerContainerFactory")
+//    public void newProductListener(ProductMessage product) {
+//        log.info("Get request from Front 'save product'" + product.toString());
+//    }
 }

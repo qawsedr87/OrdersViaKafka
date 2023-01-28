@@ -18,40 +18,40 @@ import java.util.concurrent.CompletableFuture;
 @NoArgsConstructor
 @Component
 public class ProductProducer {
-    final String productTopic = "product";
-
-    private KafkaTemplate<String, Serializable> kafkaTemplate;
-
-    @Autowired
-    public ProductProducer(KafkaTemplate<String, Serializable> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
-
-    public void send(ProductMessage message) {
-        CompletableFuture<SendResult<String, Serializable>> future = kafkaTemplate.send(productTopic, message);
-
-        // Throwable ex
-        // SendResult<String, Serializable> result
-        future.whenComplete((result, ex) -> {
-            if (ex == null) {
-                log.info("Message sent successfully with offset = {}", result.getRecordMetadata().offset());
-            }
-            else {
-                log.error("Unable to send message = {} dut to: {}", message.toString(), ex.getMessage());
-            }
-        });
-
-//        future.addCallback(new ListenableFutureCallback<SendResult<String, Serializable>>() {
-//            @Override
-//            public void onFailure(Throwable ex) {
-//                log.error("Unable to send message = {} dut to: {}", message.toString(), ex.getMessage());
-//            }
+//    final String productTopic = "product";
 //
-//            @Override
-//            public void onSuccess(SendResult<String, Serializable> result) {
+//    private KafkaTemplate<String, Serializable> kafkaTemplate;
+//
+//    @Autowired
+//    public ProductProducer(KafkaTemplate<String, Serializable> kafkaTemplate) {
+//        this.kafkaTemplate = kafkaTemplate;
+//    }
+//
+//    public void send(ProductMessage message) {
+//        CompletableFuture<SendResult<String, Serializable>> future = kafkaTemplate.send(productTopic, message);
+//
+//        // Throwable ex
+//        // SendResult<String, Serializable> result
+//        future.whenComplete((result, ex) -> {
+//            if (ex == null) {
 //                log.info("Message sent successfully with offset = {}", result.getRecordMetadata().offset());
 //            }
+//            else {
+//                log.error("Unable to send message = {} dut to: {}", message.toString(), ex.getMessage());
+//            }
 //        });
-    }
+//
+////        future.addCallback(new ListenableFutureCallback<SendResult<String, Serializable>>() {
+////            @Override
+////            public void onFailure(Throwable ex) {
+////                log.error("Unable to send message = {} dut to: {}", message.toString(), ex.getMessage());
+////            }
+////
+////            @Override
+////            public void onSuccess(SendResult<String, Serializable> result) {
+////                log.info("Message sent successfully with offset = {}", result.getRecordMetadata().offset());
+////            }
+////        });
+//    }
 
 }

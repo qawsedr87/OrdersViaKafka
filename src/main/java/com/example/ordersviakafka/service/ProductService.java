@@ -9,15 +9,15 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class ProductService {
-    private ProductProducer productProducer;
-
-    @Autowired
-    public ProductService(ProductProducer productProducer) {
-        this.productProducer = productProducer;
-    }
-
-    public void sendMessage(ProductMessage message) {
-        log.info("[ProductService] send product to topic");
-        productProducer.send(message);
-    }
+//    private ProductProducer productProducer;
+//
+//    @Autowired
+//    public ProductService(ProductProducer productProducer) {
+//        this.productProducer = productProducer;
+//    }
+//
+//    public void sendMessage(ProductMessage message) {
+//        log.info("[ProductService] send product to topic");
+//        productProducer.send(message);
+//    }
 }
