@@ -27,4 +27,22 @@ public class Order extends DateModel {
 
     @Column(columnDefinition = "TEXT")
     private String memo;
+
+    public Order() {}
+
+    public Order(Long orderId, double price, String _memo) {
+        id = orderId;
+        totalPrice = price;
+        memo = _memo;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":\"" + id + '\"' +
+                ", \"total price\":\"" + totalPrice + '\"' +
+                ", \"memo\":\"" + memo + '\"' +
+                "}";
+    }
+
 }
