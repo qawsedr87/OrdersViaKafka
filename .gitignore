@@ -38,3 +38,4 @@ out/
 
 ### Kafka Log ###
 kafka-volume/
+.DS_Store

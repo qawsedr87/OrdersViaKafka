@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -59,10 +60,14 @@ public class OrderController {
 
 
         // database
-        return orderRepository.findById(orderId)
+        orderRepository.findById(orderId)
                 .map(delivery -> {
                     orderRepository.delete(delivery);
                     return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Delivery not found with id " + orderId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + orderId));
+
+        return new ResponseEntity<>(
+                "Delete Order by Id = " + orderId,
+                HttpStatus.OK);
     }
 }

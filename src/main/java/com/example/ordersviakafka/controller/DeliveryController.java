@@ -6,6 +6,7 @@ import com.example.ordersviakafka.repository.DeliveryRepository;
 import com.example.ordersviakafka.repository.OrderRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,21 +35,25 @@ public class DeliveryController {
                 .map(order -> {
                     delivery.setOrder(order);
                     return deliveryRepository.save(delivery);
-                }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + orderId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + orderId));
     }
 
     @DeleteMapping("/orders/{orderId}/deliveries/{deliveryId}")
     public ResponseEntity<?> deleteDelivery(@PathVariable Integer orderId,
                                           @PathVariable Integer deliveryId) {
         if(!orderRepository.existsById(orderId)) {
-            throw new ResourceNotFoundException("Question not found with id " + orderId);
+            throw new ResourceNotFoundException("Order not found with id " + orderId);
         }
 
-        return deliveryRepository.findById(deliveryId)
+        deliveryRepository.findById(deliveryId)
                 .map(delivery -> {
                     deliveryRepository.delete(delivery);
                     return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + deliveryId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Delivery not found with id " + deliveryId));
+
+        return new ResponseEntity<>(
+                "Delete Delivery by Id = " + deliveryId + " of Order Id is = " + orderId,
+                HttpStatus.OK);
 
     }
 }

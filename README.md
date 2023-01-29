@@ -1,6 +1,6 @@
 # orders-api-with-kafka
 
-A simple Java Spring Boot application using Spring for Apache Kafka and PostgreSQL, packaged with Docker for locally easy deployment.
+Simple APIs of Java Spring Boot application using Spring for Apache Kafka and PostgreSQL.
 
 ## Technologies Used
 - Java 17 or higher
@@ -44,6 +44,5 @@ f2e61ce0665a   postgres:14.1-alpine               "docker-entrypoint.s…"   2 h
 
 5. To stop the containers, press CTRL + C.
 
-## Restful API
-
-## Resource
+## Documentation
+Additional documentation on the APIs and Entity Diagram can be found in the `docs` directory.
