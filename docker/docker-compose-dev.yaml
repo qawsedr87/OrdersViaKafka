@@ -1,6 +1,16 @@
 version: '3'
 
 services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=store
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
@@ -9,8 +19,8 @@ services:
     ports:
       - 22181:2181
     volumes:
-      - ./pub-technology/zookeeper/data:/data
-      - ./pub-technology/zookeeper/datalog:/datalog
+      - ./kafka-volume/zookeeper/data:/data
+      - ./kafka-volume/zookeeper/datalog:/datalog
 
   kafka-server-1:
     image: confluentinc/cp-kafka:latest
@@ -26,7 +36,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
-      - ./pub-technology/kafka1/data:/var/lib/kafka/data
+      - ./kafka-volume/kafka1/data:/var/lib/kafka/data
   kafka-server-2:
     image: confluentinc/cp-kafka:latest
     depends_on:
@@ -41,7 +51,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
-      - ./pub-technology/kafka2/data:/var/lib/kafka/data
+      - ./kafka-volume/kafka2/data:/var/lib/kafka/data
   manager:
     image: sheepkiller/kafka-manager
     ports:
@@ -50,3 +60,6 @@ services:
       ZK_HOSTS: zookeeper:2181
     depends_on:
       - zookeeper
+volumes:
+  db:
+    driver: local
