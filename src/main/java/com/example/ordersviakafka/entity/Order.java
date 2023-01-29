@@ -15,12 +15,7 @@ public class Order extends DateModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
-//    @SequenceGenerator(
-//            name = "order_generator",
-//            sequenceName = "order_sequence",
-//            initialValue = 1000
-//    )
-    private Long id;
+    private Integer id;
 
     @Column(name="price", columnDefinition="Decimal(10,2) default '0.00'")
     private double totalPrice;
@@ -29,12 +24,6 @@ public class Order extends DateModel {
     private String memo;
 
     public Order() {}
-
-    public Order(Long orderId, double price, String _memo) {
-        id = orderId;
-        totalPrice = price;
-        memo = _memo;
-    }
 
     @Override
     public String toString() {

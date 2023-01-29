@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 @Component
 @Configuration
 public class OrderProducer {
-    @Value(value = "${kafka.topic}")
+    @Value(value = "${spring.kafka.topic}")
     private String orderTopic;
     private KafkaTemplate<String, Serializable> kafkaTemplate;
 
@@ -30,8 +30,6 @@ public class OrderProducer {
     public void send(OrderModelMessage message) {
         CompletableFuture<SendResult<String, Serializable>> future = kafkaTemplate.send(orderTopic, message);
 
-        // Throwable ex
-        // SendResult<String, Serializable> result
         future.whenComplete((result, ex) -> {
             if (ex == null) {
                 log.info("Message sent successfully with offset = {}", result.getRecordMetadata().offset());
@@ -40,18 +38,6 @@ public class OrderProducer {
                 log.error("Unable to send message = {} dut to: {}", message.toString(), ex.getMessage());
             }
         });
-
-//        future.addCallback(new ListenableFutureCallback<SendResult<String, Serializable>>() {
-//            @Override
-//            public void onFailure(Throwable ex) {
-//                log.error("Unable to send message = {} dut to: {}", message.toString(), ex.getMessage());
-//            }
-//
-//            @Override
-//            public void onSuccess(SendResult<String, Serializable> result) {
-//                log.info("Message sent successfully with offset = {}", result.getRecordMetadata().offset());
-//            }
-//        });
     }
 
 }

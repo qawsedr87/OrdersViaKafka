@@ -22,13 +22,13 @@ public class DeliveryController {
     private DeliveryRepository deliveryRepository;
 
     @GetMapping("/orders/{orderId}/deliveries")
-    public List<Delivery> getOrdersByDeliveryId(@PathVariable Long orderId) {
+    public List<Delivery> getOrdersByDeliveryId(@PathVariable Integer orderId) {
         return deliveryRepository.findByOrderId(orderId);
     }
 
 
     @PostMapping("/orders/{orderId}/deliveries")
-    public Delivery addDeliveries(@PathVariable Long orderId,
+    public Delivery addDeliveries(@PathVariable Integer orderId,
                             @Valid @RequestBody Delivery delivery) {
         return orderRepository.findById(orderId)
                 .map(order -> {
@@ -38,8 +38,8 @@ public class DeliveryController {
     }
 
     @DeleteMapping("/orders/{orderId}/deliveries/{deliveryId}")
-    public ResponseEntity<?> deleteDelivery(@PathVariable Long orderId,
-                                          @PathVariable Long deliveryId) {
+    public ResponseEntity<?> deleteDelivery(@PathVariable Integer orderId,
+                                          @PathVariable Integer deliveryId) {
         if(!orderRepository.existsById(orderId)) {
             throw new ResourceNotFoundException("Question not found with id " + orderId);
         }

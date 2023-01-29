@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
-    List<Delivery> findByOrderId(Long orderId);
+public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
+    List<Delivery> findByOrderId(Integer orderId);
 }

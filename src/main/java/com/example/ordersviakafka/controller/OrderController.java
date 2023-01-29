@@ -39,18 +39,18 @@ public class OrderController {
     @PostMapping("/orders")
     public Order createOrder(@Valid @RequestBody Order newOrder) {
         // database
-        Order order = orderRepository.save(newOrder);
+        Order savedOrder = this.orderService.createOrderAndDefaultDeliveryStatus(newOrder);
 
         // kafka
-        log.info("[OrderController]: add new order = " + order.toString());
-        this.orderService.sendMessage(new OrderModelMessage(order, "add"));
+        log.info("[OrderController]: add new order = " + savedOrder.toString());
+        this.orderService.sendMessage(new OrderModelMessage(savedOrder, "add"));
 
-        return order;
+        return savedOrder;
     }
 
 
     @DeleteMapping("/orders/{orderId}")
-    public ResponseEntity<?> deleteOrder(@PathVariable Long orderId) {
+    public ResponseEntity<?> deleteOrder(@PathVariable Integer orderId) {
         // kafka
         log.info("[OrderController]: delete order by id = " + orderId);
         Order order = new Order();

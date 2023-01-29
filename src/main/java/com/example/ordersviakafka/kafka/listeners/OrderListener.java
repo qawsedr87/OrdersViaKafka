@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Configuration
 public class OrderListener {
-    @KafkaListener(topics = "${kafka.topic}", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "${spring.kafka.topic}", containerFactory = "kafkaListenerContainerFactory")
     public void newOrderListener(OrderModelMessage order) {
-        log.info("Get request from Front 'save order'" + order.toString());
+        log.info("Get request from Front 'save order' " + order.toString());
     }
 }

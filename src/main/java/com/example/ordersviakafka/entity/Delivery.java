@@ -14,7 +14,7 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Delivery extends DateModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(length = 11, columnDefinition = "varchar(32) default 'TODO'")
     @Enumerated(EnumType.STRING)
@@ -25,4 +25,10 @@ public class Delivery extends DateModel {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Order order;
+
+    public Delivery() {}
+    public Delivery(Order order, DeliveryStatus status) {
+        this.order = order;
+        this.status = status;
+    }
 }
